@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "06 - Classes.md",
-                "mode": "source",
+                "file": "07 - Constructors.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "06 - Classes.md",
+                "file": "07 - Constructors.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "06 - Classes.md",
+                "file": "07 - Constructors.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "06 - Classes.md"
+                "file": "07 - Constructors.md"
               }
             }
           }
@@ -149,16 +149,17 @@
   },
   "active": "7cc9c5fb50812012",
   "lastOpenFiles": [
+    "06 - Classes.md",
+    "07 - Constructors.md",
+    "00 - Index.md",
     "Yeni Metin Belgesi.txt",
     "06.03 - Encapsulation.md",
-    "06 - Classes.md",
     "06.04 - Abstract Data Types.md",
     "06.02 - Class Definition.md",
     "06.01 - Struct Definition.md",
     "().md",
     "05.01 - Index'ler Neden 0'dan Başlar.md",
     "05 - Arrays.md",
-    "00 - Index.md",
     "03 - Fonksiyonlar.md",
     "04 - Parameters and Overloading.md",
     "04.01 - Overloading.md",

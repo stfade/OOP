@@ -133,16 +133,13 @@ Sınıflar, int ve double gibi tam teşekküllü veri türleridir; bu türden de
 ```
 ### Accessor and Mutator Functions
 Tabii, C++ dilinde sınıflar kullanılarak veri üyelerine erişim ve bu veriler üzerinde işlem yapma, accessor (erişim) ve mutator (değiştirici) üye fonksiyonlar aracılığıyla gerçekleştirilir.
-
 #### Accessor (Erişim) Üye Fonksiyonlar:
 - **Amaç**: Veri üyelerini okumak için kullanılır.
 - **Diğer Adı**: "Get" üye fonksiyonlar olarak da adlandırılır.
 - **Özellik**: Veri üyelerini değiştirmez, sadece değerlerini döndürür.
-
 #### Mutator (Değiştirici) Üye Fonksiyonlar:
 - **Amaç**: Veri üyelerini değiştirmek için kullanılır.
 - **Özellik**: Veri üyelerini uygulamanın gereksinimlerine göre manipüle eder.
-
 ##### Örnek:
 Aşağıda, accessor ve mutator üye fonksiyonları içeren bir `Person` sınıfı örneği bulunmaktadır:
 
