@@ -1,6 +1,6 @@
 # OOP Course Index
 
-Welcome to the OOP Course! This repository contains various markdown files that cover different aspects of Object-Oriented Programming (OOP). Below is the index of the available topics:
+OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgili çeşitli konuları kapsayan markdown dosyalarını içermektedir. Aşağıda mevcut konuların dizini bulunmaktadır:
 
 ## Table of Contents
 
