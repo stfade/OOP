@@ -157,7 +157,7 @@ Nesne Yönelimli Programlamada (OOP), bir sınıfın üye değişkenlerinin baş
 	- Argüman olarak geçirilen değerin bir kopyası yapılır.
 	- Bu kopyalama işlemi ek yük oluşturur, özellikle büyük veri yapıları veya sınıf türleri için.
 	- Basit türler (int, char, vb.) için bu ek yük ihmal edilebilir düzeydedir.
-1. **Call-by-Reference (Referans ile Çağırma)**:    
+2. **Call-by-Reference (Referans ile Çağırma)**:    
 	- Argüman olarak geçirilen değerin kendisi yerine bir referansı (adres) kullanılır.
 	- Asıl argümanın bir yer tutucusu olarak işlev görür.
 	- Kopyalama işlemi gerekmediğinden, büyük veri yapıları veya sınıf türleri için çok daha verimlidir.
