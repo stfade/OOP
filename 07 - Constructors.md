@@ -141,7 +141,7 @@ Nesne Yönelimli Programlamada (OOP), bir sınıfın üye değişkenlerinin baş
     ```
 - **Initialization List Kullanımı**:  
     Üye değişkeni olarak başka bir sınıfın nesnesi bulunduğunda, bu nesnenin yapıcısını çağırmak için Initialization List kullanılır. Bu, üye değişkenlerin doğru ve verimli bir şekilde başlatılmasını sağlar.
-- Constructor'ların Çağrılması**:  
+- **Constructor'ların Çağrılması**:  
     Bir sınıfın yapıcısı, üye değişkeni olan diğer sınıfın yapıcısını Initialization List kullanarak çağırır.
     ```cpp
     Car::Car(int enginePower) : engine(enginePower) {
@@ -152,6 +152,8 @@ Nesne Yönelimli Programlamada (OOP), bir sınıfın üye değişkenlerinin baş
     Bu yaklaşım, sınıflar arasında güçlü bir ilişki kurar ve kodun yeniden kullanılabilirliğini artırır. Bir sınıf, başka bir sınıfın özelliklerini ve işlevlerini kendi içinde kullanarak daha karmaşık davranışlar oluşturabilir.
     
 Özetle, bir sınıfın üye değişkeni olarak başka sınıfların nesnelerini kullanmak, OOP'nin güçlü bir prensibidir ve Initialization List kullanarak yapıcıların doğru şekilde çağrılması bu ilişkilerin doğru kurulmasını sağlar.
+
+####  Bir nesnenin yok olması: [[07.01 - Destructor]]
 #### Parameter Passing Methods
 1. **Call-by-Value (Değer ile Çağırma)**:
 	- Argüman olarak geçirilen değerin bir kopyası yapılır.
@@ -166,6 +168,187 @@ Nesne Yönelimli Programlamada (OOP), bir sınıfın üye değişkenlerinin baş
 Sonuç olarak, büyük veri yapıları ve sınıf türleri için call-by-reference yöntemi tercih edilir, çünkü kopyalama işlemi gerektirmez ve daha verimli çalışır. Bu yöntem, bellekte gereksiz kopyalamaları önleyerek performansı artırır.
 # More Tools
 ### const parameter modifier
+- Büyük veri tipleri (genellikle sınıflar) ile çalışırken, işlev çağrılarında referansla geçiş kullanmak genellikle tercih edilir. Bu, işlevin argümanı değiştirmeyecek olsa bile yapılır. Bunun nedeni, referansla geçiş yapmanın tüm nesneyi kopyalamak zorunda kalmaması ve bu sayede performans açısından maliyetli olabilecek kopyalama işlemlerinden kaçınılmasıdır.
+- Argümanı korumak ve değiştirilmemesini sağlamak için sabit (const) parametre kullanılabilir.
+- Eğer bir işlevin parametrelerini değiştirme gereksinimi yoksa, bu parametreleri `const` ile korumak iyi bir pratiktir.
+- Bir fonksiyonun sonuna eklenen `const` anahtar kelimesi, bu fonksiyonun sınıfın üye verilerini değiştiremeyeceğini belirtir. Bu tür fonksiyonlara "const üye fonksiyonları" denir. Bu, fonksiyonun sınıfın durumu üzerinde hiçbir değişiklik yapmayacağını garanti eder. Örnek:
+
+	```cpp
+		class MyClass {
+		public:
+		    void displayData() const {
+		        // Bu fonksiyon sınıfın üye verilerini değiştiremez
+		        std::cout << memberData << std::endl;
+		    }
+		private:
+		    int memberData;
+		};
+	```
+- Bu örnekte, `displayData` fonksiyonu `const` olarak tanımlanmıştır, bu da `displayData` fonksiyonunun sınıfın `memberData` gibi üye verilerini değiştiremeyeceği anlamına gelir.
+	```cpp
+		class MyClass {
+		public:
+		    void ConstTest() const {
+		        // Bu fonksiyon, sınıfın veri elemanlarını değiştiremez.
+		        // const MyClass *p; gibi bir pointer ile çağrıldığında çalışır.
+		        // const MyClass obj; gibi bir nesne ile çağrıldığında çalışır.
+		        // Bu fonksiyon, sınıfın veri elemanlarını okuyabilir.
+		
+		        // num++;   // Hata: num, const fonksiyon içinde değiştirilemez.
+		        count++; // Bu satırda hata yok. count, static olduğu için sınıfın tüm nesneleri tarafından paylaşılır.
+		    }
+		
+		private:
+		    static int count;
+		    int num;
+		};
+	```
 ### Inline Functions
+C++ dilinde `inline` fonksiyon, derleyiciye bu fonksiyonun çağrıldığı yerde fonksiyonun kodunu yerleştirmesi (inlining) talimatını veren bir fonksiyon türüdür. Bu, fonksiyon çağrısı sırasında oluşabilecek ek yükü ortadan kaldırarak performansı artırabilir. İşte detaylar:
+
+- **Fonksiyonun Bildiriminde ve Tanımında `inline` Kullanımı:** `inline` anahtar kelimesi, fonksiyonun hem bildiriminde hem de tanımlanmasında kullanılabilir.
+    ```cpp
+    inline int add(int a, int b) {
+        return a + b;
+    }
+    ```
+    
+- **Sınıf Üye Fonksiyonları:** Sınıf tanımı içinde yazılan fonksiyonlar otomatik olarak `inline` kabul edilir.
+    ```cpp
+    class MyClass {
+    public:
+        int multiply(int a, int b) const {
+            return a * b;
+        }
+    };
+    ```
+    
+- **Kısa Fonksiyonlar İçin İdeal:** `inline` fonksiyonlar en çok çok kısa fonksiyonlar için etkilidir. Uzun fonksiyonların inline yapılması, kod boyutunu artırabilir ve performans avantajını azaltabilir.
+    
+- **Çağrı Noktasına Kodun Yerleştirilmesi:** `inline` fonksiyonun kodu, fonksiyon çağrısının yapıldığı her yere yerleştirilir. Bu, işlev çağrısı sırasında oluşan ek yükü ortadan kaldırır.
+    ```cpp
+    inline void printMessage() {
+        std::cout << "Hello, World!" << std::endl;
+    }
+    ```
+
+Bu şekilde, `inline` fonksiyonlar küçük ve sık kullanılan fonksiyonlar için performans avantajı sağlar.
 ### Static member data
+#### Static Members
+C++ dilinde, `static` üye değişkenler, sınıfın tüm nesneleri tarafından "paylaşılan" tek bir kopyaya sahiptir. Bu, bir nesne bu değişkeni değiştirdiğinde, diğer tüm nesnelerin bu değişikliği görmesini sağlar. Bu tür değişkenler, belirli durumların takibi için kullanışlıdır, örneğin:
+
+- Bir üye fonksiyonun kaç kez çağrıldığını izlemek.
+- Belirli bir zamanda kaç tane nesnenin mevcut olduğunu saymak.
+`static` üye değişkenler, türden önce `static` anahtar kelimesi ile tanımlanır.
+Örnek:
+```cpp
+class MyClass {
+public:
+    MyClass() {
+        ++objectCount; // Her nesne oluşturulduğunda sayacı artır
+    }
+
+    ~MyClass() {
+        --objectCount; // Her nesne yok edildiğinde sayacı azalt
+    }
+
+    static int getObjectCount() {
+        return objectCount; // Mevcut nesne sayısını döndür
+    }
+
+private:
+    static int objectCount; // Tüm nesneler tarafından paylaşılan sayaç
+};
+
+// Sınıf dışındaki static üye değişkenin tanımı
+int MyClass::objectCount = 0;
+```
+
+Bu örnekte:
+- `MyClass` sınıfının `objectCount` adlı bir `static` üye değişkeni vardır.
+- Bu sayaç, sınıfın tüm nesneleri tarafından paylaşılır ve nesne oluşturulup yok edildiğinde güncellenir.
+- `getObjectCount` adlı `static` üye fonksiyonu, mevcut nesne sayısını döndürür.
+
+Bu şekilde, `static` üye değişkenler, belirli durumların izlenmesini ve yönetilmesini sağlar.
+
+#### Static Functions
+C++ dilinde, üye fonksiyonlar `static` olarak tanımlanabilir. Bir üye fonksiyon, sınıfın üye verilerine erişim gerektirmiyorsa ve yine de sınıfın üyesi olması gerekiyorsa, bu fonksiyon `static` yapılabilir. `static` üye fonksiyonlar, sınıfın herhangi bir nesnesine bağlı değildir ve doğrudan sınıf adıyla çağrılabilir. İşte `static` üye fonksiyonların detayları:
+
+- **Sınıfın Üye Verilerine Erişim Gerektirmez:**  
+    `static` üye fonksiyonlar, sınıfın üye verilerine (non-static member variables) erişemez. Bu fonksiyonlar sadece `static` veriler ve `static` fonksiyonlar kullanabilir.
+    
+- **Sınıfın Bir Üyesi Olması Gerekir:**  
+    Bu fonksiyonların hala sınıfın bir üyesi olması gerekiyorsa, `static` olarak tanımlanabilir.
+    
+- **Sınıf Dışından Çağrılabilir:**  
+    `static` üye fonksiyonlar, sınıfın nesnesi olmadan doğrudan sınıf adıyla çağrılabilir. Örneğin, `Server::getTurn();`.
+    
+- **Sınıf Nesneleri Üzerinden de Çağrılabilir:**  
+    `static` üye fonksiyonlar, sınıf nesneleri üzerinden de çağrılabilir. Örneğin, `myObject.getTurn();`.
+    
+- **Sadece `static` Veriler ve Fonksiyonlar Kullanabilir:**  
+    `static` üye fonksiyonlar, sadece diğer `static` üyelerle etkileşimde bulunabilir.
+    
+Örnek:
+```cpp
+class Server {
+public:
+    static int getTurn() {
+        return turn;
+    }
+
+    static void setTurn(int t) {
+        turn = t;
+    }
+    
+private:
+    static int turn;
+};
+
+// Sınıf dışındaki static üye değişkenin tanımı
+int Server::turn = 0;
+```
+
+Bu örnekte:
+- `getTurn` ve `setTurn` fonksiyonları `static` olarak tanımlanmıştır.
+- Bu fonksiyonlar doğrudan `Server` sınıfı adıyla çağrılabilir (`Server::getTurn();`).
+- Ayrıca, bir sınıf nesnesi üzerinden de çağrılabilir (`myObject.getTurn();`), ancak bu durumda da `static` olarak kalırlar.
 # Vectors
+C++ dilinde, vektörler dinamik boyutlandırılabilen dizilerdir ve Standart Şablon Kütüphanesi (STL) kullanılarak şablon sınıfı (template class) olarak tanımlanır. Vektörler, program yürütülürken büyüyüp küçülebilirler.
+### Vektörlerin Temel Özellikleri
+- **Dinamik Boyutlandırma:** Vektörler, eleman ekleyip çıkartarak boyutlarını dinamik olarak değiştirebilirler.
+- **Şablon Sınıfı (Template Class):** Vektörler, farklı veri türleri için kullanılabilir. `vector<Base_Type>` syntax'ı kullanılarak herhangi bir veri türü `Base_Type` olarak belirtilebilir.
+- **Temel Veri Türü:** Vektörler, belirli bir temel türün (base type) değerlerinin koleksiyonunu saklar.
+### Vektörler ve Diziler Arasındaki Benzerlikler
+- **Temel Veri Türü:** Vektörler, diziler gibi belirli bir temel veri türü ile tanımlanır ve bu türün değerlerini saklar.
+- **Dizi Gibi Erişim:** Vektörler, diziler gibi indekslenerek elemanlarına erişilebilir.
+### Vektörlerin Deklarasyonu
+- **Syntax:**
+    ```cpp
+    std::vector<int> v;
+    ```
+    
+    Bu, `int` türünde bir vektör olan `v`'yi tanımlar ve sınıfın varsayılan kurucusunu çağırarak boş bir vektör oluşturur.
+### Vektöre Eleman Ekleme
+- **push_back:** Vektöre eleman eklemek için `push_back` üye fonksiyonu kullanılır.
+    ```cpp
+    v.push_back(10); // 10 değerini vektöre ekler
+    ```
+### Vektörün Boyut ve Kapasite Bilgisi
+- **size():** Vektörün mevcut eleman sayısını döndürür.
+    ```cpp
+    int s = v.size(); // vektörde kaç eleman olduğunu döner
+    ```
+    
+- **capacity():** Vektörün şu anda tahsis edilmiş olan bellek miktarını döndürür. Bu, tipik olarak `size`'dan büyüktür ve gerektiğinde otomatik olarak artırılır.
+    ```cpp
+    int c = v.capacity(); // vektörün kapasitesini döner
+    ```
+### Kapasiteyi Manuel Olarak Ayarlama
+- **reserve:** Vektörün kapasitesini manuel olarak ayarlamak için `reserve` fonksiyonu kullanılır. Bu, verimliliğin kritik olduğu durumlarda faydalıdır.
+    ```cpp
+    v.reserve(32); // kapasiteyi 32 olarak ayarlar
+    v.reserve(v.size() + 10); // kapasiteyi mevcut boyuttan 10 fazla olacak şekilde ayarlar
+    ```
+    
+Bu özellikler, vektörlerin nasıl tanımlandığını, kullanıldığını ve verimli hale getirildiğini anlamanızı sağlar.

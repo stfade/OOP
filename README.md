@@ -35,6 +35,9 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 ### Arrays
 - [05.01 - Index'ler Neden 0'dan Başlar](05.01%20-%20Index'ler%20Neden%200'dan%20Başlar.md)
 
+### Constructors
+- [07.01 - Destructor](07.01%20-%20Destructor.md)
+
 ## Resources
 
 - [Slides](https://drive.google.com/drive/folders/1sEZp-MUq780dd-tF4BEobnX3WTPsUrSF)
