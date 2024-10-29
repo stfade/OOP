@@ -11,6 +11,7 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 - [05 - Arrays](05%20-%20Arrays.md)
 - [06 - Classes](06%20-%20Classes.md)
 - [07 - Constructors](07%20-%20Constructors.md)
+- [08 - Operator Overload, Friend Functions, References](08%20-%20Operator%20Overload,%20Friend%20Functions,%20References.md)
 
 ## Subtopics
 
@@ -37,6 +38,9 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 
 ### Constructors
 - [07.01 - Destructor](07.01%20-%20Destructor.md)
+
+### Operator Overload, Friend Functions, References
+- [08 - Operator Overload, Friend Functions, References](08%20-%20Operator%20Overload,%20Friend%20Functions,%20References.md)
 
 ## Resources
 
