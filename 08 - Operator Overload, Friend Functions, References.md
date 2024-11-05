@@ -273,7 +273,441 @@ Eğer `+` operatörü bir sınıf üyesi olarak aşırı yüklenirse, çağır
 - **Genel Öneri**: Bu operatörleri aşırı yüklemek genellikle önerilmez çünkü beklenen davranışlarını kaybederler ve kodun anlaşılmasını zorlaştırabilir.
 # Friends and Automatic Type Conversion
 ## Friend Functions, Friend Classes
+C++'da sınıf üyesi olmayan fonksiyonlar, sınıfın bir parçası olmayan ancak o sınıfın nesneleri üzerinde işlem yapabilen fonksiyonlardır. Operatör aşırı yüklemeleri bu şekilde yapılabilir. Ancak, bu fonksiyonlar sınıfın özel verilerine erişmek için genellikle erişimci (getter) ve değiştirici (setter) fonksiyonlarını kullanır, bu da verimsizdir.
+
+Bu verimsizliği önlemek için, bu operatör aşırı yüklemelerini sınıfın arkadaş (friend) fonksiyonları olarak tanımlayabilirsiniz. Arkadaş fonksiyonlar, sınıfın özel ve korumalı üyelerine doğrudan erişebilir, böylece ek fonksiyon çağrısı gereksinimini ortadan kaldırır ve daha verimli olur.
+
+Örnek:
+```cpp
+#include <iostream>
+
+class MyClass {
+private:
+    int value;
+
+public:
+    MyClass(int v) : value(v) {}
+
+    // Arkadaş fonksiyon bildirimi
+    friend MyClass operator+(const MyClass& lhs, const MyClass& rhs);
+
+    void display() const {
+        std::cout << value << std::endl;
+    }
+};
+
+// Arkadaş fonksiyon tanımı
+MyClass operator+(const MyClass& lhs, const MyClass& rhs) {
+    return MyClass(lhs.value + rhs.value);
+}
+
+int main() {
+    MyClass a(5), b(10);
+    MyClass c = a + b;
+    c.display(); // 15
+    return 0;
+}
+```
+Bu şekilde, operatör aşırı yüklemeleri daha verimli hale gelir.
+
+Bazı programcılar, arkadaş (friend) fonksiyonların Nesne Yönelimli Programlama (OOP) prensiplerine aykırı olduğunu düşünür. OOP'nin "ruhu", tüm operatörlerin ve fonksiyonların üye fonksiyonlar olmasını gerektirir. Bu görüşe göre, arkadaş fonksiyonlar sınıfın kapsülleme ilkesini ihlal eder çünkü sınıfın özel üyelerine doğrudan erişim sağlarlar.
+
+Ancak, arkadaş fonksiyonların bazı avantajları vardır:
+
+1. **Verimlilik**: Arkadaş fonksiyonlar, erişimci (getter) ve değiştirici (setter) fonksiyonları çağırma ihtiyacını ortadan kaldırarak verimliliği artırır.
+2. **Otomatik Tür Dönüşümü**: Arkadaş fonksiyonlar, operatör aşırı yüklemelerinde otomatik tür dönüşümüne izin verir. Bu, operatörlerin daha esnek ve kullanışlı olmasını sağlar.
+3. **Kapsülleme**: Arkadaş fonksiyonlar, sınıf tanımında belirtildiği için hala kapsülleme sağlar. Bu, sınıfın iç yapısının dışarıdan gizli kalmasını sağlar.
+
+Özetle, arkadaş fonksiyonlar bazı OOP prensiplerine aykırı gibi görünse de, özellikle operatör aşırı yüklemelerinde sağladıkları verimlilik ve esneklik nedeniyle avantajlıdırlar.
+
+### Friend Classes
+C++'da, bir sınıfın tüm üye fonksiyonlarını başka bir sınıfa arkadaş olarak tanımlayabilirsiniz. Bu, bir fonksiyonun bir sınıfa arkadaş olmasına benzer, ancak bu durumda tüm sınıfın üye fonksiyonları arkadaş olur. Örneğin, `class F` `class C`'nin arkadaşı olarak tanımlandığında, `class F`'nin tüm üye fonksiyonları `class C`'nin özel ve korumalı üyelerine erişebilir.
+
+Önemli noktalar:
+
+- Arkadaşlık karşılıklı değildir; yani `class F` `class C`'nin arkadaşı olduğunda, `class C` `class F`'nin özel üyelerine erişemez.
+- Arkadaşlık verilir, alınmaz; yani bir sınıf başka bir sınıfa arkadaşlık vermez, sadece arkadaşlık tanımlar.
+- Arkadaş sınıf tanımı, "yetkilendiren" sınıfın tanımının içine `friend class F` şeklinde yazılır.
+
+Örnek:
+```cpp
+#include <iostream>
+
+class F; // İleri bildirim
+
+class C {
+private:
+    int value;
+
+public:
+    C(int v) : value(v) {}
+
+    // F sınıfını arkadaş olarak tanımlama
+    friend class F;
+};
+
+class F {
+public:
+    void showValue(const C& c) {
+        std::cout << c.value << std::endl; // C sınıfının özel üyesine erişim
+    }
+};
+
+int main() {
+    C c(42);
+    F f;
+    f.showValue(c); // 42
+    return 0;
+}
+```
+Bu örnekte, `class F` `class C`'nin arkadaşı olarak tanımlanmıştır, bu nedenle `F`'nin üye fonksiyonları `C`'nin özel üyelerine erişebilir.
+
 ## Constructors for Automatic Type Conversion
 # References and More Overloading
+Referans, bir depolama konumunun adıdır ve bir "pointer" (işaretçi) ile benzerdir. Ancak, referanslar doğrudan bir değişkenin bellekteki konumuna işaret eder ve bu değişkenin başka bir adıdır. Referanslar tanımlandıktan sonra başka bir değişkeni işaret edemezler.
+
+Örnek:
+```cpp
+int robert;
+int& bob = robert; // bob, robert'in referansıdır
+```
+Bu durumda, `bob` değişkeni `robert` değişkeninin depolama konumuna referans olur. `bob` üzerinde yapılan değişiklikler doğrudan `robert` üzerinde de etkili olur.
+
+Örnek kullanım:
+```cpp
+#include <iostream>
+
+int main() {
+    int robert = 10;
+    int& bob = robert; // bob, robert'in referansıdır
+
+    bob = 20; // bob'u değiştirmek robert'i de değiştirir
+
+    std::cout << "robert: " << robert << std::endl; // 20
+    std::cout << "bob: " << bob << std::endl; // 20
+
+    return 0;
+}
+```
+Bu örnekte, `bob` referansı `robert` değişkenine bağlanmıştır. `bob` üzerinde yapılan değişiklikler `robert` üzerinde de etkili olur. Bu nedenle, `bob`'u 20 olarak değiştirdiğimizde, `robert` de 20 olur.
+
+Referanslar, doğrudan bir değişkenin bellekteki konumuna işaret ettiği için, yanlış kullanıldığında beklenmedik sonuçlara yol açabilir. Örneğin, bir referansın geçersiz bir değişkene işaret etmesi durumunda bellek hataları oluşabilir.
+
+***Faydalı Kullanım Durumları***
+1. **Call-by-Reference (Referans ile Çağırma)**:
+    - Fonksiyonlara argüman olarak referanslar geçildiğinde, fonksiyon bu argümanların orijinal değişkenlerini değiştirebilir. Bu, büyük veri yapılarının kopyalanmasını önleyerek performansı artırır.
+2. **Referans Döndürme**:
+	- Fonksiyonlar, bir değişkenin referansını döndürebilir. Bu, operatör aşırı yüklemelerinin daha doğal bir şekilde yazılmasını sağlar.
+3. **Alias (Takma Ad) Olarak Düşünme**
+	- Referansları, bir değişkenin takma adı olarak düşünebilirsiniz. Bir referans, orijinal değişkenin başka bir adı gibi davranır ve bu nedenle referans üzerinden yapılan değişiklikler orijinal değişkeni etkiler.
+
+Bu şekilde, referanslar hem performans avantajları sağlar hem de kodun daha okunabilir ve doğal olmasına yardımcı olur.
+
+### Returning Reference
+***Sözdizimi:*** `int& getElement(int arr[], int index);`
+- `int&`: Fonksiyonun döndüreceği değerin türü ve bunun bir referans olduğunu belirtir.
+- `int arr[]`: Fonksiyonun aldığı parametre, bir dizi.
+- `int index`: Dizinin indeksini belirtir.
+
+Örnek:
+```cpp
+int& getElement(int arr[], int index) {
+    return arr[index]; // Dizinin bir elemanının referansını döndürür
+} 
+
+int main() {
+    int myArray[5] = {1, 2, 3, 4, 5};
+    getElement(myArray, 2) = 10; // myArray[2] = 10
+    std::cout << myArray[2] << std::endl; // 10
+
+    return 0;
+}
+```
+Bu örnekte:
+- `getElement` fonksiyonu, bir dizinin belirli bir indeksindeki elemanın referansını döndürür.
+- `getElement(myArray, 2) = 10;` ifadesi, `myArray[2]` elemanını 10 yapar.
+- `myArray[2]`'nin değeri 10 olarak güncellenir.
+
+***Özetle:***
+- Referans döndüren fonksiyonlar, bir değişkenin bellekteki konumunu döndürür.
+- Bu sayede, fonksiyonun döndürdüğü referans üzerinden yapılan değişiklikler, orijinal değişkeni etkiler.
 ## << and >>
+***Örnek:*** 
+```cpp
+#include <iostream>
+
+class MyClass {
+private:
+    int value;
+
+public:
+    MyClass(int v = 0) : value(v) {}
+
+    // Arkadaş fonksiyon olarak << operatörünü aşırı yükleme
+    friend std::ostream& operator<<(std::ostream& os, const MyClass& obj) {
+        os << obj.value;
+        return os;
+    }
+
+    // Arkadaş fonksiyon olarak >> operatörünü aşırı yükleme
+    friend std::istream& operator>>(std::istream& is, MyClass& obj) {
+        is >> obj.value;
+        return is;
+    }
+};
+
+int main() {
+    MyClass myObject(10);
+
+    // Çıktı operatörü kullanımı
+    std::cout << "MyObject: " << myObject << std::endl;
+
+    // Girdi operatörü kullanımı
+    std::cout << "Enter new value for MyObject: ";
+    std::cin >> myObject;
+
+    std::cout << "Updated MyObject: " << myObject << std::endl;
+
+    return 0;
+}
+```
+
+Bu örnekte:
+- `<<` operatörü aşırı yüklenerek `MyClass` nesnesinin `std::cout` ile nasıl yazdırılacağı tanımlanmıştır.
+- `>>` operatörü aşırı yüklenerek `MyClass` nesnesinin `std::cin` ile nasıl okunacağı tanımlanmıştır.
+- Bu sayede, `myObject.output()` gibi özel fonksiyonlar yerine `std::cout << myObject` ve `std::cin >> myObject` kullanarak daha okunabilir ve doğal bir kod yazılabilir.
+#### `<<` Operatörü (Insertion Operator)
+- `<<` operatörü, `cout` ile birlikte kullanılarak verilerin ekrana yazdırılmasını sağlar.
+- Bu operatör, iki operand alır: `cout` nesnesi ve yazdırılacak veri.
+- Örneğin, `std::cout << "Hello";` ifadesi, `"Hello"` stringini ekrana yazdırır.
+
+#### `>>` Operatörünün Aşırı Yüklenmesi
+```cpp
+#include <iostream>
+
+class Money {
+private:
+    int amount;
+
+public:
+    Money(int a = 0) : amount(a) {}
+
+    // Arkadaş fonksiyon olarak << operatörünü aşırı yükleme
+    friend std::ostream& operator<<(std::ostream& os, const Money& m) {
+        os << m.amount;
+        return os;
+    }
+
+    // Arkadaş fonksiyon olarak >> operatörünü aşırı yükleme
+    friend std::istream& operator>>(std::istream& is, Money& m) {
+        is >> m.amount;
+        return is;
+    }
+};
+
+int main() {
+    Money amount(100);
+
+    // << operatörü kullanımı
+    std::cout << "I have " << amount << std::endl;
+
+    // >> operatörü kullanımı
+    std::cout << "Enter new amount: ";
+    std::cin >> amount;
+
+    std::cout << "Updated amount: " << amount << std::endl;
+
+    return 0;
+}
+```
+Özetle
+- `<<` operatörü aşırı yüklenerek `Money` nesnesinin `std::cout` ile nasıl yazdırılacağı tanımlanmıştır.
+- `>>` operatörü aşırı yüklenerek `Money` nesnesinin `std::cin` ile nasıl okunacağı tanımlanmıştır.
+- Bu sayede, `amount.output()` gibi özel fonksiyonlar yerine `std::cout << amount` ve `std::cin >> amount` kullanarak daha okunabilir ve doğal bir kod yazılabilir.
+
+`<<` operatörü, zincirleme (cascade) işlemlerine izin vermek için `ostream` nesnesini geri döndürmelidir.
 ## Operators: =, [], ++, --
+### Assignment Operator, =
+- C++'da, atama operatörü (`=`) varsayılan olarak üye değişkenlerin birebir kopyalanmasını sağlar.
+- Bu, basit sınıflar için genellikle yeterlidir.
+- Eğer sınıfınız dinamik bellek yönetimi (pointer'lar) kullanıyorsa, varsayılan atama operatörü yeterli olmayabilir.
+- Bu durumda, kendi atama operatörünüzü yazmanız gerekir.
+
+```cpp
+#include <iostream>
+
+class MyClass {
+private:
+    int* data;
+
+public:
+    MyClass(int value) {
+        data = new int(value);
+    }
+
+    // Kopya yapıcı
+    MyClass(const MyClass& other) {
+        data = new int(*other.data);
+    }
+
+    // Özel atama operatörü
+    MyClass& operator=(const MyClass& other) {
+        if (this == &other) {
+            return *this; // Kendine atama kontrolü
+        }
+        delete data; // Eski veriyi serbest bırak
+        data = new int(*other.data); // Yeni veriyi kopyala
+        return *this;
+    }
+
+    ~MyClass() {
+        delete data;
+    }
+
+    void display() const {
+        std::cout << *data << std::endl;
+    }
+};
+
+int main() {
+    MyClass obj1(10);
+    MyClass obj2(20);
+
+    obj2 = obj1; // Atama operatörü kullanımı
+
+    obj1.display(); // 10
+    obj2.display(); // 10
+
+    return 0;
+}
+```
+Bu örnekte:
+- `MyClass` sınıfı dinamik bellek yönetimi kullanır (pointer ile).
+- Özel atama operatörü (`operator=`) yazılmıştır.
+- Atama operatörü, kendine atama kontrolü yapar, eski veriyi serbest bırakır ve yeni veriyi kopyalar.
+### `++` ve `--` Operatörlerinin Aşırı Yüklenmesi
+
+#### Ön Ek (Prefix) Notasyonu
+Ön ek notasyonu, operatörün değişkenin değerini artırmadan veya azaltmadan önce çalıştığı durumu ifade eder.
+```cpp
+class MyClass {
+private:
+    int value;
+
+public:
+    MyClass(int v = 0) : value(v) {}
+
+    // Ön ek (prefix) ++ operatörünün aşırı yüklenmesi
+    MyClass& operator++() {
+        ++value;
+        return *this;
+    }
+
+    void display() const {
+        std::cout << value << std::endl;
+    }
+};
+```
+
+#### Son Ek (Postfix) Notasyonu
+Son ek notasyonu, operatörün değişkenin değerini artırdıktan veya azalttıktan sonra çalıştığı durumu ifade eder. Bu notasyonu aşırı yüklemek için, fonksiyona `int` türünde bir parametre eklenir. Bu parametre sadece derleyiciye son ek notasyonunun kullanıldığını belirtmek için kullanılır.
+
+```cpp
+class MyClass {
+private:
+    int value;
+
+public:
+    MyClass(int v = 0) : value(v) {}
+
+    // Ön ek (prefix) ++ operatörünün aşırı yüklenmesi
+    MyClass& operator++() {
+        ++value;
+        return *this;
+    }
+
+    // Son ek (postfix) ++ operatörünün aşırı yüklenmesi
+    MyClass operator++(int) {
+        MyClass temp = *this;
+        value++;
+        return temp;
+    }
+
+    void display() const {
+        std::cout << value << std::endl;
+    }
+};
+
+int main() {
+    MyClass obj(10);
+
+    ++obj; // Ön ek kullanımı
+    obj.display(); // 11
+
+    obj++; // Son ek kullanımı
+    obj.display(); // 12
+
+    return 0;
+}
+```
+Bu örnekte:
+- `operator++()` fonksiyonu, ön ek (prefix) `++` operatörünü aşırı yükler.
+- `operator++(int)` fonksiyonu, son ek (postfix) `++` operatörünü aşırı yükler. `int` parametresi sadece derleyiciye son ek notasyonunun kullanıldığını belirtmek için kullanılır.
+
+### `[]` Operatörünün Aşırı Yüklenmesi
+1. **Üye Fonksiyon Olmalı**: `[]` operatörü, sınıfın bir üye fonksiyonu olarak aşırı yüklenmelidir.
+2. **Referans Döndürmeli**: `[]` operatörü, bir referans döndürmelidir. Bu, operatörün döndüğü değerin değiştirilebilmesini sağlar.
+```cpp
+#include <iostream>
+
+class MyArray {
+private:
+    int* data;
+    int size;
+
+public:
+    MyArray(int s) : size(s) {
+        data = new int[size];
+    }
+
+    ~MyArray() {
+        delete[] data;
+    }
+
+    // [] operatörünün aşırı yüklenmesi
+    int& operator[](int index) {
+        if (index >= 0 && index < size) {
+            return data[index];
+        } else {
+            throw std::out_of_range("Index out of range");
+        }
+    }
+
+    // [] operatörünün const versiyonu
+    const int& operator[](int index) const {
+        if (index >= 0 && index < size) {
+            return data[index];
+        } else {
+            throw std::out_of_range("Index out of range");
+        }
+    }
+};
+
+int main() {
+    MyArray arr(5);
+
+    // Değer atama
+    arr[0] = 10;
+    arr[1] = 20;
+
+    // Değer okuma
+    std::cout << "arr[0]: " << arr[0] << std::endl; // 10
+    std::cout << "arr[1]: " << arr[1] << std::endl; // 20
+
+    return 0;
+}
+```
+Bu örnekte:
+- `MyArray` sınıfı, dinamik bir dizi yönetir.
+- `operator[]` fonksiyonu, `[]` operatörünü aşırı yükler ve bir referans döndürür.
+- Bu sayede, `arr[0] = 10;` gibi ifadelerle dizinin elemanlarına erişebilir ve onları değiştirebilirsiniz.

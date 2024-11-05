@@ -12,4 +12,6 @@
 [[06 - Classes]]
 [[07 - Constructors]]
 [[08 - Operator Overload, Friend Functions, References]]
+[[09 - Strings]]
+[[10 - Pointers and Dynamic Arrays]]
 
