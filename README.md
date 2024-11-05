@@ -12,8 +12,8 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 - [06 - Classes](06%20-%20Classes.md)
 - [07 - Constructors](07%20-%20Constructors.md)
 - [08 - Operator Overload, Friend Functions, References](08%20-%20Operator%20Overload,%20Friend%20Functions,%20References.md)
-- [09 - Strings](08%20-%20Strings.md)
-- [10 - Pointers and Dynamic Arrays](07%20-%20Pointers%20and%20Dynamic%20Arrays.md)
+- [09 - Strings](09%20-%20Strings.md)
+- [10 - Pointers and Dynamic Arrays](10%20-%20Pointers%20and%20Dynamic%20Arrays.md)
 
 ## Subtopics
 
@@ -45,10 +45,10 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 - [08 - Operator Overload, Friend Functions, References](08%20-%20Operator%20Overload,%20Friend%20Functions,%20References.md)
 
 ### Strings
-- [09 - Strings](08%20-%20Strings.md)
+- [09 - Strings](09%20-%20Strings.md)
 
 ### Pointers and Dynamic Arrays
-- [10 - Pointers and Dynamic Arrays](07%20-%20Pointers%20and%20Dynamic%20Arrays.md)
+- [10 - Pointers and Dynamic Arrays](10%20-%20Pointers%20and%20Dynamic%20Arrays.md)
 
 ## Resources
 
