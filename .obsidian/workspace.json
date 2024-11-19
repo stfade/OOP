@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "f05b46ed52752eba",
+        "id": "87f332569631f826",
         "type": "tabs",
         "children": [
           {
-            "id": "6728723d31a9ac56",
+            "id": "32eeea5eadad801b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10 - Pointers and Dynamic Arrays.md",
+                "file": "14 - Inheritance.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "10 - Pointers and Dynamic Arrays"
+              "title": "14 - Inheritance"
             }
           }
         ]
@@ -163,38 +163,38 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6728723d31a9ac56",
+  "active": "32eeea5eadad801b",
   "lastOpenFiles": [
-    "09 - Strings.md",
-    "10 - Pointers and Dynamic Arrays.md",
     "00 - Index.md",
+    "14 - Inheritance.md",
+    "12 - Streams.md",
+    "06.03 - Encapsulation.md",
+    "11 - Namespaces.md",
     "08 - Operator Overload, Friend Functions, References.md",
-    "06 - Classes.md",
-    "01 - Basics.md",
+    "OOP - Vize.md",
+    "02 - Flow of Control.md",
+    "02.01 - Scope Resolution Operator.md",
+    "03 - Fonksiyonlar.md",
+    "03.01 - Parameters and Arguments.md",
+    "01.01 - Akış Operatörü.md",
     "07 - Constructors.md",
-    "Untitled.md",
+    "05 - Arrays.md",
+    "04.01 - Overloading.md",
+    "04 - Parameters and Overloading.md",
+    "01 - Basics.md",
     "07.01 - Destructor.md",
+    "06.04 - Abstract Data Types.md",
+    "06.02 - Class Definition.md",
     "06.01 - Struct Definition.md",
+    "06 - Classes.md",
+    "05.01 - Index'ler Neden 0'dan Başlar.md",
+    "10 - Pointers and Dynamic Arrays.md",
+    "Ekonomi - Vize.md",
+    "09 - Strings.md",
     "Pasted image 20241022193853.png",
     "Pasted image 20241022192409.png",
     "Pasted image 20241022192437.png",
     "Yeni Metin Belgesi.txt",
-    "06.03 - Encapsulation.md",
-    "06.04 - Abstract Data Types.md",
-    "06.02 - Class Definition.md",
-    "().md",
-    "05.01 - Index'ler Neden 0'dan Başlar.md",
-    "05 - Arrays.md",
-    "03 - Fonksiyonlar.md",
-    "04 - Parameters and Overloading.md",
-    "04.01 - Overloading.md",
-    "03.01 - Parameters and Arguments.md",
-    "02.01 - Scope Resolution Operator.md",
-    "02 - Flow of Control.md",
-    "01.01 - Akış Operatörü.md",
-    "Templates/0x - Title.md",
-    "link.md",
-    "01 -.md",
     "Templates"
   ]
 }
