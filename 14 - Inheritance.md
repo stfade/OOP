@@ -192,14 +192,14 @@ Bu örnekte, `Employee` sınıfındaki `name` ve `ssn` özel üye değişkenleri
 
 - C++'da türetilmiş sınıfların arayüzünü (interface) anlamak için, temel sınıftan (base class) türetilen sınıfın (derived class) nasıl davranacağını ve hangi üyelerin nasıl kullanılacağını bilmek önemlidir.
 
-1. **Türetilmiş Sınıfın Arayüzü:**
-	 - **Yeni Üye Fonksiyonların Bildirimi:** Türetilmiş sınıf, temel sınıftan farklı olarak kendi üye fonksiyonlarını tanımlayabilir. Bu fonksiyonlar, türetilmiş sınıfın özgün işlevselliğini sağlar.
-	 - **Miras Alınan Üye Fonksiyonların Bildirimi:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonların bazılarını yeniden tanımlayabilir (override). Bu, türetilmiş sınıfın miras aldığı fonksiyonların davranışını değiştirmesine olanak tanır.
-1. **Miras Alınan Üye Fonksiyonların Değiştirilmemesi:**
-	- **Değiştirilmemiş Fonksiyonlar:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonları yeniden tanımlamazsa, bu fonksiyonlar otomatik olarak değiştirilmeden türetilmiş sınıfa aktarılır.
-2. Türetilmiş Sınıfın Uygulaması:
-	- **Yeni Üye Fonksiyonların Tanımlanması:** Türetilmiş sınıf, kendi üye fonksiyonlarının uygulamasını sağlar. Bu, türetilmiş sınıfın özgün işlevselliğini gerçekleştirir.
-	- **Miras Alınan Fonksiyonların Yeniden Tanımlanması:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonların bazılarını yeniden tanımlayarak, bu fonksiyonların davranışını değiştirir.
+	1. **Türetilmiş Sınıfın Arayüzü:**
+		 - **Yeni Üye Fonksiyonların Bildirimi:** Türetilmiş sınıf, temel sınıftan farklı olarak kendi üye fonksiyonlarını tanımlayabilir. Bu fonksiyonlar, türetilmiş sınıfın özgün işlevselliğini sağlar.
+		 - **Miras Alınan Üye Fonksiyonların Bildirimi:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonların bazılarını yeniden tanımlayabilir (override). Bu, türetilmiş sınıfın miras aldığı fonksiyonların davranışını değiştirmesine olanak tanır.
+	2. **Miras Alınan Üye Fonksiyonların Değiştirilmemesi:**
+		- **Değiştirilmemiş Fonksiyonlar:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonları yeniden tanımlamazsa, bu fonksiyonlar otomatik olarak değiştirilmeden türetilmiş sınıfa aktarılır.
+	3. Türetilmiş Sınıfın Uygulaması:
+		- **Yeni Üye Fonksiyonların Tanımlanması:** Türetilmiş sınıf, kendi üye fonksiyonlarının uygulamasını sağlar. Bu, türetilmiş sınıfın özgün işlevselliğini gerçekleştirir.
+		- **Miras Alınan Fonksiyonların Yeniden Tanımlanması:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonların bazılarını yeniden tanımlayarak, bu fonksiyonların davranışını değiştirir.
 
 - **Yeniden Tanımlama:** Türetilen sınıfta, temel sınıfta var olan bir fonksiyonu aynı parametre listesi ile yeniden tanımlamaktır. Overload ise aynı isimde fonksiyonları farklı parametre listeleri ile tanımlamaktır.
 - C++'da function signature şunlar ile oluşturulur:
