@@ -188,4 +188,207 @@ int main() {
 Bu örnekte, `Employee` sınıfındaki `name` ve `ssn` özel üye değişkenlerine doğrudan erişim yoktur. `HourlyEmployee` sınıfı, bu değişkenlere `getName()` ve `getSSN()` üye fonksiyonları aracılığıyla erişir.
 
 - Temel sınıfın üye fonksiyonları da aynı şekilde davranır. Temel sınıfın üye fonksiyonları, temel sınıfın arayüzü ve uygulaması dışında erişilemez. Türemiş sınıfın üye fonksiyon tanımlarında bile doğrudan erişilemezler.
-# Programming with Inheritance
+- C++'da sınıf üyeleri üç ana erişim belirteci ile tanımlanabilir: `public`, `private`, ve `protected`. [[14.01 - Protected]] 
+
+- C++'da türetilmiş sınıfların arayüzünü (interface) anlamak için, temel sınıftan (base class) türetilen sınıfın (derived class) nasıl davranacağını ve hangi üyelerin nasıl kullanılacağını bilmek önemlidir.
+
+1. **Türetilmiş Sınıfın Arayüzü:**
+	 - **Yeni Üye Fonksiyonların Bildirimi:** Türetilmiş sınıf, temel sınıftan farklı olarak kendi üye fonksiyonlarını tanımlayabilir. Bu fonksiyonlar, türetilmiş sınıfın özgün işlevselliğini sağlar.
+	 - **Miras Alınan Üye Fonksiyonların Bildirimi:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonların bazılarını yeniden tanımlayabilir (override). Bu, türetilmiş sınıfın miras aldığı fonksiyonların davranışını değiştirmesine olanak tanır.
+1. **Miras Alınan Üye Fonksiyonların Değiştirilmemesi:**
+	- **Değiştirilmemiş Fonksiyonlar:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonları yeniden tanımlamazsa, bu fonksiyonlar otomatik olarak değiştirilmeden türetilmiş sınıfa aktarılır.
+2. Türetilmiş Sınıfın Uygulaması:
+	- **Yeni Üye Fonksiyonların Tanımlanması:** Türetilmiş sınıf, kendi üye fonksiyonlarının uygulamasını sağlar. Bu, türetilmiş sınıfın özgün işlevselliğini gerçekleştirir.
+	- **Miras Alınan Fonksiyonların Yeniden Tanımlanması:** Türetilmiş sınıf, temel sınıftan miras aldığı üye fonksiyonların bazılarını yeniden tanımlayarak, bu fonksiyonların davranışını değiştirir.
+
+- **Yeniden Tanımlama:** Türetilen sınıfta, temel sınıfta var olan bir fonksiyonu aynı parametre listesi ile yeniden tanımlamaktır. Overload ise aynı isimde fonksiyonları farklı parametre listeleri ile tanımlamaktır.
+- C++'da function signature şunlar ile oluşturulur:
+	- Fonksiyon adı
+	- Parametrelerin sayısı ve tiplerinin sırası
+- Function signature şunları içermez:
+	- Return type
+	- const keyword
+	- Referance operatörü (&)
+- **Base Class fonksiyonunun çağırılması:** Türetilmiş sınıfta bir fonksiyonu yeniden tanımladığınızda, temel sınıfın orijinal fonksiyonu hala mevcuttur. Bu fonksiyonu, `::` operatörünü kullanarak açıkça çağırabilirsiniz.
+- C++'da, temel sınıftaki "normal" fonksiyonlar türetilmiş sınıfa miras olarak aktarılır. Ancak, bazı özel fonksiyonlar bu kuralın dışındadır. Bu özel fonksiyonlar arasında kurucu fonksiyonlar (constructors), yıkıcı fonksiyonlar (destructors), kopyalama kurucusu (copy constructor) ve atama operatörü (assignment operator) bulunur.
+- C++'da, temel sınıfın yıkıcı fonksiyonu (`destructor`) doğru bir şekilde çalışıyorsa, türetilmiş sınıfın yıkıcı fonksiyonunu yazmak oldukça kolaydır. Türetilmiş sınıfın yıkıcı fonksiyonu çağrıldığında, otomatik olarak temel sınıfın yıkıcı fonksiyonu da çağrılır. Bu nedenle, türetilmiş sınıfın yıkıcı fonksiyonunda temel sınıfın yıkıcı fonksiyonunu açıkça çağırmanıza gerek yoktur. Önce türetilen sınıf yok edilir daha sonra temel sınıf yok edilir.
+- C++'da, türetilmiş sınıfların yıkıcı fonksiyonları (destructors), nesne kapsam dışına çıktığında veya silindiğinde otomatik olarak çağrılır. Yıkıcı fonksiyonların çağrılma sırası, kurucu fonksiyonların (constructors) çağrılma sırasının tersidir. Yani, en türetilmiş sınıfın yıkıcı fonksiyonu ilk olarak çağrılır ve ardından temel sınıfların yıkıcı fonksiyonları sırayla çağrılır.
+# Is-a / Has-a Relationship
+C++'da kalıtım (inheritance) ve bileşen (composition) kavramları, sınıflar arasındaki ilişkileri tanımlamak için kullanılır. Bu ilişkiler, "Is a" ve "Has a" olarak adlandırılan iki temel kategoride incelenebilir.
+- **"Is a" İlişkisi:** Kalıtım, bir sınıfın başka bir sınıftan türetilmesi anlamına gelir. Bu, türetilmiş sınıfın temel sınıfın bir özelliğini taşıdığını veya temel sınıfın bir türü olduğunu gösterir.
+```cpp
+class Employee {
+public:
+    void printDetails() {
+        std::cout << "Employee details" << std::endl;
+    }
+};
+
+class HourlyEmployee : public Employee {
+public:
+    void printHourlyDetails() {
+        std::cout << "HourlyEmployee details" << std::endl;
+    }
+};
+
+int main() {
+    HourlyEmployee he;
+    he.printDetails();       // Employee'nin fonksiyonu
+    he.printHourlyDetails(); // HourlyEmployee'nin fonksiyonu
+    return 0;
+}
+```
+- **"Has a" İlişkisi:** Bileşen, bir sınıfın başka bir sınıfın nesnesini üye veri (member data) olarak içermesi anlamına gelir. Bu, bir sınıfın başka bir sınıfın bir parçası olduğunu gösterir.
+```cpp
+class Engine {
+public:
+    void start() {
+        std::cout << "Engine started" << std::endl;
+    }
+};
+
+class Car {
+private:
+    Engine engine;
+public:
+    void startCar() {
+        engine.start();
+        std::cout << "Car started" << std::endl;
+    }
+};
+
+int main() {
+    Car car;
+    car.startCar();  // Car'ın fonksiyonu
+    return 0;
+}
+```
+
+# Protected ve Private Kalıtım
+C++'da, kalıtımın iki özel formu bulunur: `protected` kalıtım ve `private` kalıtım. Bu iki form, genellikle sık kullanılmaz ve standart `public` kalıtıma göre daha az yaygındır. Bu formların nasıl çalıştığını ve ne zaman kullanılabileceğini anlatacağım.
+-  `protected` kalıtımda, temel sınıfın `public` üyeleri, türetilmiş sınıfta `protected` olarak kabul edilir. Bu, türetilmiş sınıfın bu üyelere erişebilmesini sağlar, ancak bu üyeler dışarıdan erişilemez hale gelir.
+```cpp
+class Employee {
+public:
+    void printDetails() {
+        std::cout << "Employee details" << std::endl;
+    }
+};
+
+class SalariedEmployee : protected Employee {
+public:
+    void printSalariedDetails() {
+        printDetails();  // protected olarak erişilebilir
+    }
+};
+
+int main() {
+    SalariedEmployee se;
+    se.printSalariedDetails();  // Çıktı: Employee details
+    // se.printDetails();  // Hata: printDetails() artık protected
+    return 0;
+}
+```
+
+- `private` kalıtımda, temel sınıfın tüm üyeleri, türetilmiş sınıfta `private` olarak kabul edilir. Bu, türetilmiş sınıfın bu üyelere erişebilmesini sağlar, ancak bu üyeler dışarıdan veya başka türetilmiş sınıflardan erişilemez hale gelir.
+```cpp
+class Employee {
+public:
+    void printDetails() {
+        std::cout << "Employee details" << std::endl;
+    }
+};
+
+class SalariedEmployee : private Employee {
+public:
+    void printSalariedDetails() {
+        printDetails();  // private olarak erişilebilir
+    }
+};
+
+int main() {
+    SalariedEmployee se;
+    se.printSalariedDetails();  // Çıktı: Employee details
+    // se.printDetails();  // Hata: printDetails() artık private
+    return 0;
+}
+```
+
+# Çoklu Kalıtım
+C++'da, bir türetilmiş sınıfın birden fazla temel sınıfa sahip olması mümkündür. Bu durum, çoklu kalıtım (multiple inheritance) olarak adlandırılır. Çoklu kalıtım, bir sınıfın birden fazla temel sınıftan miras almasını sağlar, ancak bu durumda belirsizlikler (ambiguities) ve karmaşıklıklar ortaya çıkabilir. Bu nedenle, çoklu kalıtım dikkatli kullanılmalıdır ve genellikle deneyimli programcılar tarafından tercih edilir.
+- Bir türetilmiş sınıf, birden fazla temel sınıftan miras alabilir. Bu durumda, temel sınıflar virgülle ayrılarak belirtilir.
+```cpp
+#include <iostream>
+
+// Temel Sınıf 1
+class Base1 {
+public:
+    void displayBase1() {
+        std::cout << "Base1 display" << std::endl;
+    }
+};
+
+// Temel Sınıf 2
+class Base2 {
+public:
+    void displayBase2() {
+        std::cout << "Base2 display" << std::endl;
+    }
+};
+
+// Türetilmiş Sınıf
+class DerivedMulti : public Base1, public Base2 {
+public:
+    void displayDerived() {
+        std::cout << "DerivedMulti display" << std::endl;
+    }
+};
+
+int main() {
+    DerivedMulti dm;
+    dm.displayBase1();   // Base1'in fonksiyonu
+    dm.displayBase2();   // Base2'nin fonksiyonu
+    dm.displayDerived(); // DerivedMulti'nin fonksiyonu
+    return 0;
+}
+```
+- Eğer iki temel sınıf aynı isimli bir üye içeriyorsa, türetilmiş sınıfta bu üyeye erişirken belirsizlik oluşabilir. Bu durumda, hangi temel sınıfın üyesine erişileceğini belirtmek için kapsam çözünürlük operatörü (`::`) kullanılmalıdır.
+```cpp
+#include <iostream>
+
+// Temel Sınıf 1
+class Base1 {
+public:
+    void display() {
+        std::cout << "Base1 display" << std::endl;
+    }
+};
+
+// Temel Sınıf 2
+class Base2 {
+public:
+    void display() {
+        std::cout << "Base2 display" << std::endl;
+    }
+};
+
+// Türetilmiş Sınıf
+class DerivedMulti : public Base1, public Base2 {
+public:
+    void displayDerived() {
+        Base1::display();  // Base1'in display fonksiyonu
+        Base2::display();  // Base2'nin display fonksiyonu
+    }
+};
+
+int main() {
+    DerivedMulti dm;
+    dm.displayDerived();
+    return 0;
+}
+```
+
+
+**Alternatif Yaklaşımlar:**
+- **Bileşen (Composition):** Çoklu kalıtım yerine, bileşen kullanarak sınıflar arasındaki ilişkileri daha basit bir şekilde yönetmek mümkündür.
+- **Arayüzler (Interfaces):** C++'da arayüzler olmamasına rağmen, saf sanal fonksiyonlar (pure virtual functions) kullanarak benzer bir yapı oluşturulabilir.
