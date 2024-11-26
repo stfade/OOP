@@ -53,5 +53,3 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 ## Resources
 
 - [Slides](https://drive.google.com/drive/folders/1sEZp-MUq780dd-tF4BEobnX3WTPsUrSF)
-
-Feel free to explore each topic to deepen your understanding of Object-Oriented Programming concepts.
