@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
-                "mode": "source",
+                "file": "15.01 - Polymorphism Extra.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "15.01 - Polymorphism Extra"
             }
           }
         ]
@@ -163,13 +163,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3db9adec5452531e",
+  "active": "9cc0a08a25acdc34",
   "lastOpenFiles": [
     "15 - Polymorphism.md",
+    "15.01 - Polymorphism Extra.md",
+    "README.md",
     "00 - Index.md",
     "14 - Inheritance.md",
     "14.01 - Protected.md",
-    "README.md",
     "12 - Streams.md",
     "11 - Namespaces.md",
     "10 - Pointers and Dynamic Arrays.md",
@@ -190,7 +191,6 @@
     "07.01 - Destructor.md",
     "06.04 - Abstract Data Types.md",
     "06.02 - Class Definition.md",
-    "06.01 - Struct Definition.md",
     "Pasted image 20241022193853.png",
     "Pasted image 20241022192409.png",
     "Pasted image 20241022192437.png",

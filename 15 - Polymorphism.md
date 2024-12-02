@@ -4,6 +4,13 @@
 
 ---
 # Virtual Functions
+Polymorphism (çok biçimlilik), nesne yönelimli programlamada bir işlemin farklı nesne türleri tarafından farklı şekillerde gerçekleştirilmesini sağlayan bir kavramdır. C++'da polymorphism, genellikle sanal fonksiyonların kullanımıyla sağlanır ve iki ana türü vardır:
+
+- Derleme Zamanı Polymorphism: Fonksiyon aşırı yükleme ve operatör aşırı yükleme ile gerçekleştirilir.
+- Çalışma Zamanı Polymorphism: Sanal fonksiyonlar ve sınıf hiyerarşisi ile gerçekleştirilir.
+
+Bu sayede, aynı arayüze sahip farklı nesneler farklı davranışlar sergileyebilir.
+
 C++'da çok biçimlilik (polymorphism), bir fonksiyona birden fazla anlamın ilişkilendirilmesini sağlayan bir kavramdır. Bu, nesne yönelimli programlamanın temel prensiplerinden biridir. Çok biçimlilik, sanal fonksiyonlar (virtual functions) aracılığıyla sağlanır. Sanal fonksiyonlar, bir fonksiyonun farklı sınıflarda farklı şekillerde uygulanmasını sağlar.
 
 ### 1. **Sanal Fonksiyonlar (Virtual Functions):**
@@ -1005,3 +1012,5 @@ int main() {
     return 0;
 }
 ```
+
+Daha fazla bilgi için: [[15.01 - Polymorphism Extra]]
