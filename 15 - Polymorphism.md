@@ -3,14 +3,13 @@
 *Resources*: [name]()
 
 ---
-# Virtual Functions
 Polymorphism (çok biçimlilik), nesne yönelimli programlamada bir işlemin farklı nesne türleri tarafından farklı şekillerde gerçekleştirilmesini sağlayan bir kavramdır. C++'da polymorphism, genellikle sanal fonksiyonların kullanımıyla sağlanır ve iki ana türü vardır:
 
 - Derleme Zamanı Polymorphism: Fonksiyon aşırı yükleme ve operatör aşırı yükleme ile gerçekleştirilir.
 - Çalışma Zamanı Polymorphism: Sanal fonksiyonlar ve sınıf hiyerarşisi ile gerçekleştirilir.
 
 Bu sayede, aynı arayüze sahip farklı nesneler farklı davranışlar sergileyebilir.
-
+# Virtual Functions
 C++'da çok biçimlilik (polymorphism), bir fonksiyona birden fazla anlamın ilişkilendirilmesini sağlayan bir kavramdır. Bu, nesne yönelimli programlamanın temel prensiplerinden biridir. Çok biçimlilik, sanal fonksiyonlar (virtual functions) aracılığıyla sağlanır. Sanal fonksiyonlar, bir fonksiyonun farklı sınıflarda farklı şekillerde uygulanmasını sağlar.
 
 ### 1. **Sanal Fonksiyonlar (Virtual Functions):**
@@ -1014,3 +1013,139 @@ int main() {
 ```
 
 Daha fazla bilgi için: [[15.01 - Polymorphism Extra]]
+
+
+# Örnek Quiz Sorusu: Hayvanat Bahçesi Yönetim Sistemi
+
+#### Soru:
+Bir hayvanat bahçesi yönetim sistemi oluşturmanız isteniyor. Bu sistemde, hayvanlar (Animal) ve onların türevleri olan memeliler (Mammal) ve kuşlar (Bird) bulunmaktadır. Ayrıca, her hayvanın bir adı ve yaşı vardır. Memelilerin ek olarak bir kürk rengi (furColor) ve kuşların bir kanat açıklığı (wingSpan) vardır. Hayvanlar belirli sesler çıkarır ve bu sesler türe göre farklılık gösterir.
+
+Aşağıdaki UML diyagramını kullanarak sınıfları oluşturun ve belirtilen işlevleri gerçekleştirin:
+
+#### UML Diyagramı:
+
+```
+				+-------------------+
+				|      Animal       |
+				+-------------------+
+				| - name: string    |
+				| - age: int        |
+				+-------------------+
+				| + Animal(n: str,  |
+				|   a: int)         |
+				| + makeSound():    |
+				|   void            |
+				| + ~Animal()       |
+				+-------------------+
+				          /    \
+				         /      \
+				        /        \
+	+-------------------+        +-------------------+
+	|      Mammal       |        |       Bird        |
+	+-------------------+        +-------------------+
+	| - furColor: string|        | - wingSpan: double|
+	+-------------------+        +-------------------+
+	| + Mammal(n: str,  |        | + Bird(n: str,    |
+	|   a: int, f: str) |        |   a: int, w: dbl) |
+	| + makeSound():    |        | + makeSound():    |
+	|   void            |        |   void            |
+	| + ~Mammal()       |        | + ~Bird()         |
+	+-------------------+        +-------------------+
+```
+
+#### Yapılacaklar:
+1. Yukarıdaki UML diyagramına göre sınıfları oluşturun.
+2. `Animal` sınıfında `makeSound` fonksiyonunu sanal (virtual) olarak tanımlayın ve türetilmiş sınıflarda (`Mammal` ve `Bird`) bu fonksiyonu geçersiz kılın (override).
+3. `main` fonksiyonunda bir `Animal` işaretçisi kullanarak birkaç `Mammal` ve `Bird` nesnesi oluşturun ve `makeSound` fonksiyonunu çağırın.
+4. `main` fonksiyonunda `dynamic_cast` kullanarak `Animal` işaretçisini `Mammal` ve `Bird` işaretçilerine dönüştürün ve ilgili özelliklere erişin.
+5. `main` fonksiyonunda `Animal` türünde bir nesne oluşturun ve bir `Mammal` nesnesine atayın, ardından nesne dilimleme (object slicing) durumunu gözlemleyin.
+
+#### Kod (Cevap):
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Animal sınıfı
+class Animal {
+public:
+    string name;
+    int age;
+
+    Animal(string n, int a) : name(n), age(a) {}
+
+    virtual void makeSound() const {
+        cout << "Animal makes a sound" << endl;
+    }
+
+    virtual ~Animal() {
+        cout << "Animal destructor" << endl;
+    }
+};
+
+// Mammal sınıfı
+class Mammal : public Animal {
+public:
+    string furColor;
+
+    Mammal(string n, int a, string f) : Animal(n, a), furColor(f) {}
+
+    void makeSound() const override {
+        cout << "Mammal makes a sound" << endl;
+    }
+
+    ~Mammal() {
+        cout << "Mammal destructor" << endl;
+    }
+};
+
+// Bird sınıfı
+class Bird : public Animal {
+public:
+    double wingSpan;
+
+    Bird(string n, int a, double w) : Animal(n, a), wingSpan(w) {}
+
+    void makeSound() const override {
+        cout << "Bird makes a sound" << endl;
+    }
+
+    ~Bird() {
+        cout << "Bird destructor" << endl;
+    }
+};
+
+int main() {
+    // Animal işaretçisi kullanarak Mammal ve Bird nesneleri oluşturma
+    Animal* animal1 = new Mammal("Lion", 5, "Golden");
+    Animal* animal2 = new Bird("Eagle", 3, 2.5);
+
+    animal1->makeSound(); // Mammal makes a sound
+    animal2->makeSound(); // Bird makes a sound
+
+    // dynamic_cast kullanarak Animal işaretçisini Mammal ve Bird işaretçilerine dönüştürme
+    Mammal* mammalPtr = dynamic_cast<Mammal*>(animal1);
+    if (mammalPtr) {
+        cout << "Mammal's fur color: " << mammalPtr->furColor << endl;
+    }
+
+    Bird* birdPtr = dynamic_cast<Bird*>(animal2);
+    if (birdPtr) {
+        cout << "Bird's wing span: " << birdPtr->wingSpan << endl;
+    }
+
+    // Nesne dilimleme (object slicing) durumu
+    Animal animal3 = Mammal("Tiger", 4, "Striped");
+    cout << "Animal's name: " << animal3.name << endl;
+    cout << "Animal's age: " << animal3.age << endl;
+    // cout << "Animal's fur color: " << animal3.furColor << endl; // ERROR: furColor is sliced off
+
+    // Belleği serbest bırakma
+    delete animal1;
+    delete animal2;
+
+    return 0;
+}
+```
+
+Bu kodu yazın ve çalıştırın. Çıktıda, her hayvanın ses çıkardığını, `dynamic_cast` ile tür dönüşümlerinin yapıldığını ve nesne dilimleme durumunu gözlemleyebilirsiniz. Bu, polimorfizm, sanal fonksiyonlar, tür dönüşümleri ve nesne dilimleme kavramlarını anlamanıza yardımcı olacaktır.

@@ -19,6 +19,7 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 - [13 - Recursion](13%20-%20Recursion.md)
 - [14 - Inheritance](14%20-%20Inheritance.md)
 - [15 - Polymorphism](15%20-%20Polymorphism.md)
+- [16 - Templates](16%20-%20Templates.md)
 
 ## Subtopics
 
@@ -66,6 +67,9 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 
 ### Polymorphism
 - [15.01 - Polymorphism Extra](15.01%20-%20Polymorphism%20Extra.md)
+
+### Templates
+- [16.01 - Templates](16.01%20-%20Templates.md)
 
 ## Resources
 

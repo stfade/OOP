@@ -19,4 +19,6 @@
 [[13 - Recursion]]
 [[14 - Inheritance]]
 [[15 - Polymorphism]]
+[[16 - Templates]]
+
 

@@ -392,3 +392,148 @@ int main() {
 **Alternatif Yaklaşımlar:**
 - **Bileşen (Composition):** Çoklu kalıtım yerine, bileşen kullanarak sınıflar arasındaki ilişkileri daha basit bir şekilde yönetmek mümkündür.
 - **Arayüzler (Interfaces):** C++'da arayüzler olmamasına rağmen, saf sanal fonksiyonlar (pure virtual functions) kullanarak benzer bir yapı oluşturulabilir.
+
+
+
+# Örnek Quiz Sorusu: Çalışan Yönetim Sistemi
+
+#### Soru:
+Bir çalışan yönetim sistemi oluşturmanız isteniyor. Bu sistemde, çalışanlar (Employee) ve onların türevleri olan maaşlı çalışanlar (SalariedEmployee) ve saatlik çalışanlar (HourlyEmployee) bulunmaktadır. Ayrıca, her çalışanın bir departmanı (Department) vardır. Departmanlar, çalışanları yönetir ve her departmanın bir adı vardır.
+
+Aşağıdaki UML diyagramını kullanarak sınıfları oluşturun ve belirtilen işlevleri gerçekleştirin:
+
+#### UML Diyagramı:
+
+```
++-------------------+          +-------------------+
+|    Department     |          |     Employee      |
++-------------------+          +-------------------+
+| - name: string    |          | - name: string    |
+| - employees:      |          | - ssn: string     |
+|   vector<Employee>|          +-------------------+
++-------------------+          | + Employee(n: str,|
+| + addEmployee(e:  |          |   s: str)         |
+|   Employee): void |          | + printCheck():   |
+| + listEmployees():|          |   void            |
+|   void            |          +-------------------+
++-------------------+                    ^
+                                        / \
+                                       /   \
+                                      /     \
+                                     /       \
+                                    /         \
+                                   /           \
+                                  /             \
+				+-------------------+          +-------------------+
+				| SalariedEmployee  |          |  HourlyEmployee   |
+				+-------------------+          +-------------------+
+				| - salary: double  |          | - hourlyRate:     |
+				+-------------------+          |   double          |
+				| + SalariedEmployee|          | - hoursWorked:    |
+				|   (n: str, s: str,|          |   int             |
+				|   sal: double)    |          +-------------------+
+				| + printCheck():   |          | + HourlyEmployee  |
+				|   void            |          |   (n: str, s: str,|
+				+-------------------+          |   rate: double,   |
+				                               |   hours: int)     |
+				                               | + printCheck():   |
+				                               |   void            |
+				                               +-------------------+
+```
+
+#### Yapılacaklar:
+1. Yukarıdaki UML diyagramına göre sınıfları oluşturun.
+2. `Department` sınıfında çalışan ekleme (`addEmployee`) ve çalışanları listeleme (`listEmployees`) işlevlerini tanımlayın.
+3. `Employee` sınıfında `printCheck` işlevini sanal (virtual) olarak tanımlayın ve türetilmiş sınıflarda (`SalariedEmployee` ve `HourlyEmployee`) bu işlevi geçersiz kılın (override).
+4. `main` fonksiyonunda bir `Department` nesnesi oluşturun, birkaç `SalariedEmployee` ve `HourlyEmployee` nesnesi ekleyin ve çalışanları listeleyin.
+
+#### Kod (Cevap):
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+// Employee sınıfı
+class Employee {
+public:
+    std::string name;
+    std::string ssn;
+
+    Employee(std::string n, std::string s) : name(n), ssn(s) {}
+
+    virtual void printCheck() {
+        std::cerr << "printCheck called for undifferentiated employee!! Aborting…" << std::endl;
+    }
+
+    virtual ~Employee() = default;
+};
+
+// SalariedEmployee sınıfı
+class SalariedEmployee : public Employee {
+public:
+    double salary;
+
+    SalariedEmployee(std::string n, std::string s, double sal) : Employee(n, s), salary(sal) {}
+
+    void printCheck() override {
+        std::cout << "Printing check for salaried employee: " << name << std::endl;
+    }
+};
+
+// HourlyEmployee sınıfı
+class HourlyEmployee : public Employee {
+public:
+    double hourlyRate;
+    int hoursWorked;
+
+    HourlyEmployee(std::string n, std::string s, double rate, int hours) 
+        : Employee(n, s), hourlyRate(rate), hoursWorked(hours) {}
+
+    void printCheck() override {
+        std::cout << "Printing check for hourly employee: " << name << std::endl;
+    }
+};
+
+// Department sınıfı
+class Department {
+private:
+    std::string name;
+    std::vector<Employee*> employees;
+
+public:
+    Department(std::string n) : name(n) {}
+
+    void addEmployee(Employee* e) {
+        employees.push_back(e);
+    }
+
+    void listEmployees() {
+        std::cout << "Employees in department " << name << ":" << std::endl;
+        for (auto e : employees) {
+            e->printCheck();
+        }
+    }
+
+    ~Department() {
+        for (auto e : employees) {
+            delete e;
+        }
+    }
+};
+
+int main() {
+    Department dept("HR");
+
+    SalariedEmployee* se1 = new SalariedEmployee("John Doe", "123-45-6789", 50000);
+    HourlyEmployee* he1 = new HourlyEmployee("Jane Smith", "987-65-4321", 20, 40);
+
+    dept.addEmployee(se1);
+    dept.addEmployee(he1);
+
+    dept.listEmployees();
+
+    return 0;
+}
+```
+
+Bu kodu yazın ve çalıştırın. Çıktıda, her çalışanın çekinin yazdırıldığını göreceksiniz. Bu, kalıtım ve bileşen kavramlarını anlamanıza yardımcı olacaktır.
