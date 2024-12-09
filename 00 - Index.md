@@ -20,5 +20,8 @@
 [[14 - Inheritance]]
 [[15 - Polymorphism]]
 [[16 - Templates]]
+[[17 - Linked Data Structures]]
+[[18 - Exception]]
+
 
 

@@ -20,6 +20,7 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 - [14 - Inheritance](14%20-%20Inheritance.md)
 - [15 - Polymorphism](15%20-%20Polymorphism.md)
 - [16 - Templates](16%20-%20Templates.md)
+- [18 - Exception Handling](18%20-%20Exception.md)
 
 ## Subtopics
 
@@ -70,6 +71,9 @@ OOP Kursuna Hoş Geldiniz! Bu depo, Nesne Yönelimli Programlama (OOP) ile ilgil
 
 ### Templates
 - [16.01 - Templates](16.01%20-%20Templates.md)
+
+### Exception Handling
+- [18.01 - Exception Handling Basics](18.01%20-%20Exception%20Handling%20Basics.md)
 
 ## Resources
 

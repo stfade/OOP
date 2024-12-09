@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "16 - Templates.md",
+                "file": "18 - Exception.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "16 - Templates"
+              "title": "18 - Exception"
             }
           }
         ]
@@ -165,10 +165,11 @@
   },
   "active": "9cc0a08a25acdc34",
   "lastOpenFiles": [
+    "00 - Index.md",
+    "18 - Exception.md",
+    "16 - Templates.md",
     "15 - Polymorphism.md",
     "14 - Inheritance.md",
-    "16 - Templates.md",
-    "00 - Index.md",
     "15.01 - Polymorphism Extra.md",
     "README.md",
     "14.01 - Protected.md",
@@ -190,7 +191,6 @@
     "04 - Parameters and Overloading.md",
     "01 - Basics.md",
     "07.01 - Destructor.md",
-    "06.04 - Abstract Data Types.md",
     "Pasted image 20241022193853.png",
     "Pasted image 20241022192409.png",
     "Pasted image 20241022192437.png",
